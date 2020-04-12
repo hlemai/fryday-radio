@@ -1,6 +1,9 @@
 var net = require('net');
-
 var SOCKETPORT=1234;
+var MUSICPATH="/Users/hlemai/Musics/";
+//var MUSICEXT="m4a";
+
+var MUSICEXT="mp3";
 
 function getDataOnMessage(message,callback) {
     var client = new net.Socket();
@@ -35,5 +38,38 @@ module.exports.getMetadata = function(number,callback) {
             callback(data);
         });
     });
-
 };
+
+module.exports.getYoutubeSong = function(url,callback) {
+    var cmd="youtube-dl -x --audio-format "+MUSICEXT+" --output '"+MUSICPATH+"%(id)s.%(ext)s' "+ url;
+    if(MUSICEXT=="m4a") {
+        cmd="youtube-dl -f 'bestaudio[ext="+MUSICEXT+"]' --output '"+MUSICPATH+"%(id)s.%(ext)s' "+ url;
+    }
+    const { exec } = require("child_process");
+    console.log("EXEC : "+cmd);
+
+    var ret=exec(cmd,(err, stdout, stderr) => {
+        if (err) {
+            // node couldn't execute the command
+            console.log("####ERROR");
+            return;
+        }
+        // Should get and parse data to get filename
+        var lines = stdout.split('\n');
+        var id=lines[0].split(' ')[1]
+        id = id.substr(0,id.length-1);
+        console.log("Get Video "+id);
+        callback(id);
+    });
+
+    ret.on("exit",function(code) {console.log("Exited with code "+code);});
+};
+
+module.exports.getAndPushYoutubeSong = function(url,callback) {
+    this.getYoutubeSong(url,id => {
+        console.log (MUSICPATH+id+"."+MUSICEXT);
+        this.pushSong(MUSICPATH+id+"."+MUSICEXT,callback);
+    });
+};
+
+
