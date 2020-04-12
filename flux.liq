@@ -1,6 +1,9 @@
 # Set global param
 set("log.file.path","/home/pi/.local/log/basic-radio.log")
 set("server.telnet",true)
+set("server.socket",true)
+set("server.socket.path","/home/pi/socket-fryday")
+
 # default playlist
 myplaylist = playlist(id="playlist",
         length=3600.0, default_duration=1800.0,timeout=90.0,
