@@ -5,7 +5,6 @@ function pushSong(path) {
     var ret=-1;
     client.connect(1234, '127.0.0.1', function() {
         console.log('Connected');
-        //client.write("")
         client.write("queue.push "+path+"\n");
     });
 
@@ -62,7 +61,5 @@ function getMetadat(number) {
     });
     return ret;
 }
-
-
 
 pushSong("/home/pi/Music/flux.m4a");
