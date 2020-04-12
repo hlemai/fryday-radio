@@ -15,7 +15,8 @@ radio = myplaylist
 fryday = request.queue(id="queue")
 
 radio = fallback(id="switcher",track_sensitive = true, 
-        [fryday, radio, blank(duration=5.)])
+        [fryday,  blank(duration=5.)])
+#[fryday,radio,  blank(duration=5.)])
 
 # iTunes-style (so-called "dumb"--but good enough for me) crossfading:
 radio = crossfade(start_next=10.,fade_out=10.,fade_in=10.,radio)
