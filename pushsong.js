@@ -5,9 +5,15 @@ function pushSong(path) {
     var client = new net.Socket();
     client.connect(1234, '127.0.0.1', function() {
         console.log('Connected');
-        client.write("queue.push "+path);
+        //client.write("")
+        client.write("queue.push "+path+"\n");
     });
-    
+
+    client.on('connect',function() {
+        console.log('OnConnected');
+        client.push(("queue.push "+path);
+    });
+
     client.on('data', function(data) {
         console.log('Received: ' + data);
         client.destroy(); // kill client after server's response
