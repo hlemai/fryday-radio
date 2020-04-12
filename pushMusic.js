@@ -1,4 +1,4 @@
-var music=require("./music");
+import { getAndPushYoutubeSong } from "./music";
 
 if (process.argv.length === 2) {
     console.error('Expected at least one argument!');
@@ -7,4 +7,4 @@ if (process.argv.length === 2) {
 
 var url=process.argv[2];
 console.log("Pushing :"+url);
-music.getAndPushYoutubeSong(url, id => {console.log("id : "+id);});
+getAndPushYoutubeSong(url, id => {console.log("id : "+id);});
