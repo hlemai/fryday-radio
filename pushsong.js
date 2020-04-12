@@ -1,65 +1,39 @@
 var net = require('net');
 
-function pushSong(path) {
+var SOCKETPORT=1234;
+
+function getDataOnMessage(message,callback) {
     var client = new net.Socket();
-    var ret=-1;
-    client.connect(1234, '127.0.0.1', function() {
+    client.connect(SOCKETPORT, '127.0.0.1', function() {
         console.log('Connected');
-        client.write("queue.push "+path+"\n");
+        client.write(message+"\n");
     });
 
     client.on('data', function(data) {
         console.log('Received: ' + data);
-        ret=data;
+        callback(data);
         client.destroy(); // kill client after server's response
     });
     
     client.on('close', function() {
         console.log('Connection closed');
     });
-    return data;
 }
 
-function getOnAirNumber() {
-    var client = new net.Socket();
-    var ret=-1;
-    client.connect(1234, '127.0.0.1', function() {
-        console.log('Connected');
-        //client.write("")
-        client.write("request.on_air");
+module.exports.pushSong = function (path,callback) {
+    getDataOnMessage("queue.push "+path,callback);
+};
+
+module.exports.getOnAirNumber = function (callback) {
+    getDataOnMessage("request.on_air",callback);
+};
+
+module.exports.getMetadata = function(number,callback) {
+    getOnAirNumber(request.on_air, number => {
+        getDataOnMessage("request.metadata "+number, data=> {
+            console.log("   Metadata"+data);
+            callback(data);
+        });
     });
 
-    client.on('data', function(data) {
-        console.log('Received: ' + data);
-        ret=data;
-        client.destroy(); // kill client after server's response
-    });
-    
-    client.on('close', function() {
-        console.log('Connection closed');
-    });
-    return ret;
-}
-
-function getMetadat(number) {
-    var client = new net.Socket();
-    var ret=-1;
-    client.connect(1234, '127.0.0.1', function() {
-        console.log('Connected');
-        //client.write("")
-        client.write("request.on_air");
-    });
-
-    client.on('data', function(data) {
-        console.log('Received: ' + data);
-        ret=data;
-        client.destroy(); // kill client after server's response
-    });
-    
-    client.on('close', function() {
-        console.log('Connection closed');
-    });
-    return ret;
-}
-
-pushSong("/home/pi/Music/flux.m4a");
+};
