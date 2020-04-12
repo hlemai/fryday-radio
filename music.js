@@ -1,8 +1,8 @@
 var net = require('net');
 var SOCKETPORT=1234;
-var MUSICPATH="/Users/hlemai/Musics/";
-//var MUSICEXT="m4a";
+var MUSICPATH="./musics/";
 
+//var MUSICEXT="m4a";
 var MUSICEXT="mp3";
 
 function getDataOnMessage(message,callback) {
