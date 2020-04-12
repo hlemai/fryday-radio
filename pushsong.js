@@ -6,7 +6,7 @@ function pushSong(path) {
     client.connect(1234, '127.0.0.1', function() {
         console.log('Connected');
         //client.write("")
-        client.push("queue.push "+path);
+        client.write("queue.push "+path+"\n");
     });
 
     client.on('connect',function() {
