@@ -1,6 +1,6 @@
 var net=require("net");
 
-var config=require("config/config");
+var config=require("./config/config");
 
 
 

@@ -7,4 +7,4 @@ var config={
 
 };
 
-module.exports.config=config;
+module.exports=config;
