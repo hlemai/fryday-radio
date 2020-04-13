@@ -27,15 +27,19 @@ function getDataOnMessage(message,callback) {
 }
 
 module.exports.start= function (callback) {
-    getDataOnMessage("/.start"+path,callback);
+    getDataOnMessage("/.start",callback);
 }
 
 module.exports.stop= function(callback) {
-    getDataOnMessage("/.stop"+path,callback);
+    getDataOnMessage("/.stop",callback);
 }
 
 module.exports.skip= function(callback) {
-    getDataOnMessage("/.skip"+path,callback);
+    getDataOnMessage("/.skip",callback);
+}
+
+module.exports.remaining= function(callback) {
+    getDataOnMessage("/.remaining",callback);
 }
 
 
