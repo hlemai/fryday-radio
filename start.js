@@ -6,7 +6,7 @@ var config=require("./config/config");
 
 
 // Connect to our Database
-const redisClient = redis.createClient(config.REDISPORT, config.REDIS_HOST);
+const redisClient = redis.createClient(config.REDISPORT, config.REDISHOST);
 
 
 redisClient.on('connect', () => {
