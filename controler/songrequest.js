@@ -1,5 +1,6 @@
 const redis=require("redis");
 const md5 = require('md5');
+const music = require("../music");
 var config=require("../config/config");
 
 const NEWREQUESTLIST="NEWREQUESTLIST";
@@ -53,6 +54,9 @@ module.exports.validateInput = (req, res, next) => {
                 if (error) {
                     return res.json({ status: 400, message: 'Something went wrong2', error });
                 }
+                music.getAndPushYoutubeSong(newSongRequest.url,res => {
+                    console.log(res);
+                });
                 return res.json({result, status: 200, message: 'List updated', newSongRequest});
             });
         });
