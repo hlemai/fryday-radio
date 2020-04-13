@@ -1,5 +1,5 @@
 ./startradio.sh &
 redis-server &
-./cleanmusic.sh
+./cleanmusics.sh
 redis-cli FLUSHALL
 node start.js
