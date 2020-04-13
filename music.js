@@ -1,14 +1,12 @@
 var net=require("net");
 
-var SOCKETPORT=1234;
-var MUSICPATH="./musics/";
+var config=require("config/config");
 
-//var MUSICEXT="m4a";
-var MUSICEXT="mp3";
+
 
 function getDataOnMessage(message,callback) {
     var client = new net.Socket();
-    client.connect(SOCKETPORT, '127.0.0.1', function() {
+    client.connect(config.SOCKETPORT, '127.0.0.1', function() {
         console.log('Connected');
         client.write(message+"\n");
     });
@@ -68,9 +66,9 @@ module.exports.getMetadata= function (number,callback) {
 }
 
 module.exports.getYoutubeSong= function (url,callback) {
-    var cmd="youtube-dl -x --audio-format "+MUSICEXT+" --output '"+MUSICPATH+"%(id)s.%(ext)s' "+ url;
-    if(MUSICEXT=="m4a") {
-        cmd="youtube-dl -f 'bestaudio[ext="+MUSICEXT+"]' --output '"+MUSICPATH+"%(id)s.%(ext)s' "+ url;
+    var cmd="youtube-dl -x --audio-format "+config.MUSICEXT+" --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
+    if(config.MUSICEXT=="m4a") {
+        cmd="youtube-dl -f 'bestaudio[ext="+config.MUSICEXT+"]' --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
     }
     const { exec } = require("child_process");
     console.log("EXEC : "+cmd);
@@ -94,8 +92,8 @@ module.exports.getYoutubeSong= function (url,callback) {
 
 module.exports.getAndPushYoutubeSong= function (url,callback) {
     this.getYoutubeSong(url,id => {
-        console.log (MUSICPATH+id+"."+MUSICEXT);
-        this.pushSong(MUSICPATH+id+"."+MUSICEXT,callback);
+        console.log (config.MUSICPATH+id+"."+config.MUSICEXT);
+        this.pushSong(config.MUSICPATH+id+"."+config.MUSICEXT,callback);
     });
 }
 

@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/hlemai/fryday-radio/issues"
   },
-  "homepage": "https://github.com/hlemai/fryday-radio#readme"
+  "homepage": "https://github.com/hlemai/fryday-radio#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express.js": "^1.0.0",
+    "md5": "^2.2.1",
+    "redis.js": "^1.2.4"
+  }
 }
