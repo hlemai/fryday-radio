@@ -64,8 +64,8 @@ function getItemDetail(id) {
         hideMessage();
     })
     .catch(function(error) {
-    console.log(error);
-    hideMessage();
+        console.log(error);
+        hideMessage();
     });   
 };
 
@@ -76,16 +76,19 @@ function refreshPosts() {
     var url = './api/songrequests';
     showMessage();
     fetch(url)
-    .then((resp) => resp.json())
+    .then((resp) => {
+        hideMessage();
+        return (resp.json());
+    })
     .then(function(data) {
         return data.map(function(id) {
+            hideMessage();
             getItemDetail(id);
         });
-        hideMessage();
     })
     .catch(function(error) {
-    console.log(error);
-    hideMessage();
+        console.log(error);
+        hideMessage();
     });   
 }
 
