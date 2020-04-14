@@ -1,3 +1,7 @@
+document.getElementById("btNewUrl").addEventListener("click",(elt,ev)=> addnewSong());
+
+var timer=setTimeout( function() {refreshPosts();},3000);
+
 function showMessage() {
     document.getElementById("message").className="show";
 }
@@ -30,7 +34,7 @@ function addnewSong() {
         })
         .then(function(data) {
             console.log(data);
-            refreshPosts();
+            timer=setTimeout( function() {refreshPosts();},5000);
             hideMessage();
         })
         .catch(function(error) {
@@ -54,10 +58,16 @@ function getItemDetail(id) {
     fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
-        let li = createNode('li'),span = createNode('span');
+        var li=document.getElementById(data.id);
+        if(li=="undefined" || li == null) {
+            li = createNode('li');
+            li.id=data.id;
+            append(ul, li);
+        }
+        li.innerHTML="";
+        var span = createNode('span');
         span.innerHTML = `${data.number} - ${data.username} - <a href="${data.url}" >${data.title} </a>`;
         append(li, span);
-        append(ul, li);
         hideMessage();
     })
     .catch(function(error) {
@@ -68,8 +78,8 @@ function getItemDetail(id) {
 
 function refreshPosts() {
     // todo : gérer l'ordre d'insertion en créant les li puis les spans
-    var ul = document.getElementById('lisongs');
-    ul.innerHTML="";
+    if(timer!=null)
+        clearTimeout(timer);
     var url = './api/songrequests';
     showMessage();
     fetch(url)
@@ -78,10 +88,11 @@ function refreshPosts() {
         return (resp.json());
     })
     .then(function(data) {
-        return data.map(function(id) {
+        data.map(function(id) {
             hideMessage();
             getItemDetail(id);
         });
+        timer=setTimeout( function() {refreshPosts();},30000);
     })
     .catch(function(error) {
         console.log(error);
