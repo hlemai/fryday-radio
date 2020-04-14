@@ -10,7 +10,7 @@ function addnewSong() {
         "username":form.fname.value,
         "url":form.url.value
     }; 
-    var url = '/api/songrequest/new';
+    var url = './api/songrequest/new';
     var content=JSON.stringify(newsong);
     
     var myHeaders = new Headers({
@@ -43,7 +43,7 @@ function append(parent, el) {
 
 function getItemDetail(id) {
     var ul = document.getElementById('lisongs');
-    var url = '/api/songrequest/'+id;
+    var url = './api/songrequest/'+id;
     fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
@@ -61,7 +61,7 @@ function refreshPosts() {
     // todo : gérer l'ordre d'insertion en créant les li puis les spans
     var ul = document.getElementById('lisongs');
     ul.innerHTML="";
-    var url = '/api/songrequests';
+    var url = './api/songrequests';
     fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
