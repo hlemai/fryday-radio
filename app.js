@@ -12,11 +12,9 @@ app.use(bodyParser.json());
 
 //add the router
 app.use(express.static(__dirname + '/static'));
-//Store all HTML files in view folder.
 
 // Handle Routes
 app.use('/api', index);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
