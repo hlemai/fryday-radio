@@ -47,6 +47,23 @@ img {
     margin: 1.3em auto;
     max-width: 95%;
 }
+input {
+    font-size:20px;
+    width: 100%;
+}
+
+button {
+    font-size:16px;
+}
+
+#message {
+    color:red;
+    visibility: hidden;
+}
+
+#message.show {
+    visibility: visible;
+}
 
 @keyframes colorize {
     0% {

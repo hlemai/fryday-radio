@@ -81,6 +81,7 @@ module.exports.getYoutubeSong= function (url,callback) {
         if (err) {
             // node couldn't execute the command
             console.log("####ERROR");
+            callback("ERROR");
             return;
         }
         // Should get and parse data to get filename
@@ -96,8 +97,13 @@ module.exports.getYoutubeSong= function (url,callback) {
 
 module.exports.getAndPushYoutubeSong= function (url,callback) {
     this.getYoutubeSong(url,id => {
-        console.log (config.MUSICPATH+id+"."+config.MUSICEXT);
-        this.pushSong(config.MUSICPATH+id+"."+config.MUSICEXT,callback);
+        if(id=== "ERROR" ) {
+            callback("ERROR");
+        }
+        else {
+            console.log (config.MUSICPATH+id+"."+config.MUSICEXT);
+            this.pushSong(config.MUSICPATH+id+"."+config.MUSICEXT,callback);
+        }
     });
 }
 

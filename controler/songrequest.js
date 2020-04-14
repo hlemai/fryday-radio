@@ -41,25 +41,29 @@ module.exports.validateInput = (req, res, next) => {
       if (reply === 1) {
         return res.json({ status: 400, message: 'request allready pushed', newSongRequest });
       }
-      // Add New SongREquest
-      client.hmset(
-        newSongRequest.id, [
-            "id",newSongRequest.id,
-            "username", newSongRequest.username,
-            "url", newSongRequest.url], (error, result) => {
-            if (error) {
-                return res.json({ status: 400, message: 'Something went wrong', error });
-            }
-            client.rpush(NEWREQUESTLIST,newSongRequest.id,(error,result) => {
-                if (error) {
-                    return res.json({ status: 400, message: 'Something went wrong2', error });
-                }
-                music.getAndPushYoutubeSong(newSongRequest.url,res => {
-                    console.log(res);
-                });
-                return res.json({result, status: 200, message: 'List updated', newSongRequest});
-            });
+      // try to add music
+      music.getAndPushYoutubeSong(newSongRequest.url,id => {
+        if(id ==="ERROR")
+          return res.json({ status: 400, message: 'Bad url', newSongRequest });
+      
+        // Add New SongREquest
+        client.hmset(
+          newSongRequest.id, [
+              "id",newSongRequest.id,
+              "username", newSongRequest.username,
+              "url", newSongRequest.url,
+              "idsong",id], (error, result) => {
+              if (error) {
+                  return res.json({ status: 400, message: 'Something went wrong', error });
+              }
+              client.rpush(NEWREQUESTLIST,newSongRequest.id,(error,result) => {
+                  if (error) {
+                      return res.json({ status: 400, message: 'Something went wrong2', error });
+                  }
+                  return res.json({result, status: 200, message: 'List updated', newSongRequest});
+              });
         });
+      });
     });
 };
 

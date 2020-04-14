@@ -1,10 +1,17 @@
 
 var timer = setTimeout(refreshPosts(),10000);
 
+function showMessage() {
+    document.getElementById("message").className="show";
+}
+function hideMessage() {
+    document.getElementById("message").className="";
+}
 
 document.getElementById("btNewUrl").addEventListener("click",(elt,ev)=> addnewSong());
 
 function addnewSong() {
+    showMessage();
     var form =document.getElementById("newSong");
     var newsong = {
         "username":form.fname.value,
@@ -30,6 +37,7 @@ function addnewSong() {
         })
         .catch(function(error) {
             console.log(error);
+            hideMessage();
             });
 };
 
@@ -44,6 +52,7 @@ function append(parent, el) {
 function getItemDetail(id) {
     var ul = document.getElementById('lisongs');
     var url = './api/songrequest/'+id;
+    showMessage();
     fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
@@ -51,9 +60,11 @@ function getItemDetail(id) {
         span.innerHTML = `${data.username} - ${data.url}`;
         append(li, span);
         append(ul, li);
+        hideMessage();
     })
     .catch(function(error) {
     console.log(error);
+    hideMessage();
     });   
 };
 
@@ -62,10 +73,10 @@ function refreshPosts() {
     var ul = document.getElementById('lisongs');
     ul.innerHTML="";
     var url = './api/songrequests';
+    showMessage();
     fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
-
         return data.map(function(id) {
             getItemDetail(id);
         });
@@ -73,6 +84,7 @@ function refreshPosts() {
     })
     .catch(function(error) {
     console.log(error);
+    hideMessage();
     });   
 }
 
