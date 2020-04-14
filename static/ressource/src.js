@@ -1,9 +1,3 @@
-
-var timer = setTimeout(function repeat(){
-    refreshPosts();
-    var timer=setTimeout(repeat(),10000);
-},10000);
-
 function showMessage() {
     document.getElementById("message").className="show";
 }
