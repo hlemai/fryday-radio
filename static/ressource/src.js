@@ -1,5 +1,5 @@
 
-var timer = setTimeout(refreshPosts(),10000);
+var timer = setInterval(refreshPosts(),10000);
 
 function showMessage() {
     document.getElementById("message").className="show";
