@@ -40,11 +40,11 @@ function addnewSong() {
             console.log(error);
             hideMessage();
             });
-};
+}
 
 function createNode(element) {
     return document.createElement(element);
-};
+}
 
 function append(parent, el) {
   return parent.appendChild(el);
@@ -67,7 +67,7 @@ function getItemDetail(id) {
         console.log(error);
         hideMessage();
     });   
-};
+}
 
 function refreshPosts() {
     // todo : gérer l'ordre d'insertion en créant les li puis les spans
