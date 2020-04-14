@@ -4,18 +4,17 @@ set("server.telnet",true)
 
 # default playlist
 myplaylist = playlist(id="playlist",
-        length=3600.0, default_duration=1800.0,timeout=90.0,
+        #length=3600.0, default_duration=1800.0,timeout=90.0,
         mode="random",
         reload=300,
         reload_mode="seconds",
-        mime_type="audio/x-mpegurl",
         "./musics/default")
 
 radio = myplaylist
 
 fryday = request.queue(id="queue")
 
-radio = fallback(id="switcher",track_sensitive = true, 
+radio = fallback(id="switcher",track_sensitive = false, 
         [fryday, radio, blank(duration=5.)])
 
 # iTunes-style (so-called "dumb"--but good enough for me) crossfading:

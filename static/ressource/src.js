@@ -34,6 +34,7 @@ function addnewSong() {
         .then(function(data) {
             console.log(data);
             refreshPosts();
+            hideMessage();
         })
         .catch(function(error) {
             console.log(error);
@@ -80,7 +81,7 @@ function refreshPosts() {
         return data.map(function(id) {
             getItemDetail(id);
         });
-        
+        hideMessage();
     })
     .catch(function(error) {
     console.log(error);
