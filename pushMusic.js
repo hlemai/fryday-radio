@@ -7,4 +7,4 @@ if (process.argv.length === 2) {
 
 var url=process.argv[2];
 console.log("Pushing :"+url);
-music.getAndPushYoutubeSong(url, id => {console.log("id : "+id);});
+music.getAndPushYoutubeSong(url, data => {console.log("data : "+JSON.stringify(data));});

@@ -42,17 +42,23 @@ module.exports.validateInput = (req, res, next) => {
         return res.json({ status: 400, message: 'request allready pushed', newSongRequest });
       }
       // try to add music
-      music.getAndPushYoutubeSong(newSongRequest.url,id => {
-        if(id ==="ERROR")
+      music.getAndPushYoutubeSong(newSongRequest.url,data => {
+        if(data.id ==="ERROR")
           return res.json({ status: 400, message: 'Bad url', newSongRequest });
       
         // Add New SongREquest
+        var addtionaldata=require("../"+config.MUSICPATH+data.id+".info");
+        data.title=addtionaldata.title;
+
         client.hmset(
           newSongRequest.id, [
               "id",newSongRequest.id,
               "username", newSongRequest.username,
               "url", newSongRequest.url,
-              "idsong",id], (error, result) => {
+              "idsong",data.id,
+              "number",data.number,
+              "title",data.title
+              ], (error, result) => {
               if (error) {
                   return res.json({ status: 400, message: 'Something went wrong', error });
               }
@@ -73,7 +79,6 @@ module.exports.getListRequestIds = function(req,res) {
         if(error) {
               return res.json(lstRequest);
         }
-        console.log(result);
         return res.json(result);
       } );
   };
@@ -85,4 +90,15 @@ module.exports.getListRequestIds = function(req,res) {
         }
         return res.json(result);
       } );
+  };
+
+  module.exports.getNowPlaying = function(req,res) {
+    var message=""
+    music.getOnAirNumber(data=>{
+      message = data;
+      music.remaining(remaindata=> {
+        message=message+" -> remaining : "+remaindata+" seconds";
+        return res.json(message);
+      });
+    });
   };

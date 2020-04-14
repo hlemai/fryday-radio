@@ -70,9 +70,10 @@ module.exports.getMetadata= function (number,callback) {
 }
 
 module.exports.getYoutubeSong= function (url,callback) {
-    var cmd="youtube-dl -x --audio-format "+config.MUSICEXT+" --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
+    var cmdcommon="youtube-dl --write-thumbnail --write-info-json --no-playlist";
+    var cmd=cmdcommon+" -x --audio-format "+config.MUSICEXT+" --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
     if(config.MUSICEXT=="m4a") {
-        cmd="youtube-dl -f 'bestaudio[ext="+config.MUSICEXT+"]' --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
+        cmd=cmdcommon+" -f 'bestaudio[ext="+config.MUSICEXT+"]' --output '"+config.MUSICPATH+"%(id)s.%(ext)s' "+ url;
     }
     const { exec } = require("child_process");
     console.log("EXEC : "+cmd);
@@ -98,11 +99,17 @@ module.exports.getYoutubeSong= function (url,callback) {
 module.exports.getAndPushYoutubeSong= function (url,callback) {
     this.getYoutubeSong(url,id => {
         if(id=== "ERROR" ) {
-            callback("ERROR");
+            callback({id:"ERROR"});
         }
         else {
             console.log (config.MUSICPATH+id+"."+config.MUSICEXT);
-            this.pushSong(config.MUSICPATH+id+"."+config.MUSICEXT,callback);
+            this.pushSong(config.MUSICPATH+id+"."+config.MUSICEXT,played => {
+                callback({
+                    "id":id,
+                    "url":url,
+                    "number":played
+                });
+            });
         }
     });
 }

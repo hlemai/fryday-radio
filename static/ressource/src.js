@@ -57,7 +57,7 @@ function getItemDetail(id) {
     .then((resp) => resp.json())
     .then(function(data) {
         let li = createNode('li'),span = createNode('span');
-        span.innerHTML = `${data.username} - ${data.url}`;
+        span.innerHTML = `${data.number} - ${data.username} - <a href="${data.url}" >${data.title} </a>`;
         append(li, span);
         append(ul, li);
         hideMessage();
@@ -87,5 +87,6 @@ function refreshPosts() {
     hideMessage();
     });   
 }
+
 
 
