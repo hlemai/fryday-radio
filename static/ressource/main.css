@@ -59,6 +59,8 @@ input {
 button {
     font-size:18px;
     padding: 5px 10px 5px 10px;
+    float:right;
+    margin-right: 30%;
 }
 
 #message {
@@ -70,6 +72,10 @@ button {
     visibility: visible;
 }
 
+#icon {
+    width: 100px;
+    height: auto;
+}
 @keyframes colorize {
     0% {
         -webkit-filter: grayscale(100%);
