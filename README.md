@@ -72,7 +72,7 @@ $ npm install
 Then you can run the app with 
 
 ``` sh
-$ node test.js
+$ node start.js
 ```
 
 Enjoy the music !
