@@ -41,15 +41,6 @@ samp {
     display: none;
 }
 
-img {
-    animation: colorize 2s cubic-bezier(0, 0, .78, .36) 1;
-    background: transparent;
-    border: 10px solid rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
-    display: block;
-    margin: 1.3em auto;
-    max-width: 95%;
-}
 
 input {
     font-size:18px;
@@ -75,6 +66,7 @@ button {
 #icon {
     width: 100px;
     height: auto;
+    float: right;
 }
 @keyframes colorize {
     0% {
