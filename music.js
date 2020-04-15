@@ -2,8 +2,6 @@ var net=require("net");
 
 var config=require("./config/config");
 
-
-
 function getDataOnMessage(message,callback) {
     var client = new net.Socket();
     client.connect(config.SOCKETPORT, '127.0.0.1', function() {
