@@ -1,4 +1,6 @@
-document.getElementById("btNewUrl").addEventListener("click",(elt,ev)=> addnewSong());
+window.onload = function () {
+    document.getElementById("btNewUrl").onclick=  addnewSong;
+};
 
 var timer=setTimeout( function() {refreshPosts();},3000);
 
@@ -8,8 +10,6 @@ function showMessage() {
 function hideMessage() {
     document.getElementById("message").className="";
 }
-
-document.getElementById("btNewUrl").addEventListener("click",(elt,ev)=> addnewSong());
 
 function addnewSong() {
     showMessage();
