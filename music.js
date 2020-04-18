@@ -1,7 +1,7 @@
-var net=require("net");
-
+const net=require("net");
 var config=require("./config/config");
 
+// Usefull function to connect to telnet server, send and receive data.
 function getDataOnMessage(message,callback) {
     var client = new net.Socket();
     client.connect(config.SOCKETPORT, '127.0.0.1', function() {
@@ -26,24 +26,24 @@ function getDataOnMessage(message,callback) {
 
 module.exports.start= function (callback) {
     getDataOnMessage("/.start",callback);
-}
+};
 
 module.exports.stop= function(callback) {
     getDataOnMessage("/.stop",callback);
-}
+};
 
 module.exports.skip= function(callback) {
     getDataOnMessage("/.skip",callback);
-}
+};
 
 module.exports.remaining= function(callback) {
     getDataOnMessage("/.remaining",callback);
-}
+};
 
 
 module.exports.pushSong= function(path,callback) {
     getDataOnMessage("queue.push "+path,callback);
-}
+};
 
 module.exports.getQueueIds= function(callback) {
     getDataOnMessage("queue.queue",data => {
@@ -51,12 +51,12 @@ module.exports.getQueueIds= function(callback) {
         var lstIds=data.split(' ');
         callback(lstIds);
     });
-}
+};
 
 
 module.exports.getOnAirNumber= function  (callback) {
     getDataOnMessage("request.on_air",callback);
-}
+};
 
 module.exports.getMetadata= function (number,callback) {
     getOnAirNumber(request.on_air, number => {
@@ -65,7 +65,7 @@ module.exports.getMetadata= function (number,callback) {
             callback(data);
         });
     });
-}
+};
 
 module.exports.getYoutubeSong= function (url,callback) {
     var cmdcommon="youtube-dl --write-thumbnail --write-info-json --no-playlist";
@@ -92,7 +92,7 @@ module.exports.getYoutubeSong= function (url,callback) {
     });
 
     ret.on("exit",function(code) {console.log("Exited with code "+code);});
-}
+};
 
 module.exports.getAndPushYoutubeSong= function (url,callback) {
     this.getYoutubeSong(url,id => {
@@ -110,6 +110,6 @@ module.exports.getAndPushYoutubeSong= function (url,callback) {
             });
         }
     });
-}
+};
 
 
